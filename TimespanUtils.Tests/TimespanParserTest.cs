@@ -13,5 +13,12 @@ namespace TimespanUtils.Tests
             var timeSpanParser = new TimeSpanParser();
             
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldFailWhenPassedNullToCtor()
+        {
+            new TimeSpanParser(null);
+        }
     }
 }

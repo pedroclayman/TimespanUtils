@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace TimespanUtils
 {
-    class SingleTermParser
+    class SingleTermParser : ISingleTermParser
     {
         private readonly IList<TermTuple> _tuples = new List<TermTuple>()
         {
