@@ -10,13 +10,13 @@ namespace TimespanUtils.Tests
         public void ShouldParse()
         {
             var timeSpanParser = new SingleTermParser();
-            Assert.AreEqual(TimeSpan.FromDays(6), timeSpanParser.Parse("6 days"));
-            Assert.AreEqual(TimeSpan.FromDays(12), timeSpanParser.Parse("12 days"));
-            Assert.AreEqual(TimeSpan.FromDays(1), timeSpanParser.Parse("1 day"));
-
             Assert.AreEqual(TimeSpan.FromDays(6 * 7), timeSpanParser.Parse("6 weeks"));
             Assert.AreEqual(TimeSpan.FromDays(12 * 7), timeSpanParser.Parse("12 weeks"));
             Assert.AreEqual(TimeSpan.FromDays(1 * 7), timeSpanParser.Parse("1 week"));
+
+            Assert.AreEqual(TimeSpan.FromDays(6), timeSpanParser.Parse("6 days"));
+            Assert.AreEqual(TimeSpan.FromDays(12), timeSpanParser.Parse("12 days"));
+            Assert.AreEqual(TimeSpan.FromDays(1), timeSpanParser.Parse("1 day"));
 
             Assert.AreEqual(TimeSpan.FromHours(6), timeSpanParser.Parse("6 hours"));
             Assert.AreEqual(TimeSpan.FromHours(12), timeSpanParser.Parse("12 hours"));
@@ -38,6 +38,34 @@ namespace TimespanUtils.Tests
             Assert.AreEqual(TimeSpan.FromMilliseconds(12), timeSpanParser.Parse("12 millis"));
             Assert.AreEqual(TimeSpan.FromMilliseconds(1), timeSpanParser.Parse("1 milli"));
             
+        }
+
+        [TestMethod]
+        public void ShouldNotPlayGrammarNazi()
+        {
+            var timeSpanParser = new SingleTermParser();
+
+            Assert.AreEqual(TimeSpan.FromDays(1 * 7), timeSpanParser.Parse("1 weeks"));
+            Assert.AreEqual(TimeSpan.FromDays(2 * 7), timeSpanParser.Parse("2 week"));
+
+            Assert.AreEqual(TimeSpan.FromDays(1), timeSpanParser.Parse("1 days"));
+            Assert.AreEqual(TimeSpan.FromDays(2), timeSpanParser.Parse("2 day"));
+
+            Assert.AreEqual(TimeSpan.FromHours(1), timeSpanParser.Parse("1 hours"));
+            Assert.AreEqual(TimeSpan.FromHours(2), timeSpanParser.Parse("2 hour"));
+
+            Assert.AreEqual(TimeSpan.FromMinutes(1), timeSpanParser.Parse("1 minutes"));
+            Assert.AreEqual(TimeSpan.FromMinutes(2), timeSpanParser.Parse("2 minute"));
+
+            Assert.AreEqual(TimeSpan.FromSeconds(1), timeSpanParser.Parse("1 seconds"));
+            Assert.AreEqual(TimeSpan.FromSeconds(2), timeSpanParser.Parse("2 second"));
+
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1), timeSpanParser.Parse("1 milliseconds"));
+            Assert.AreEqual(TimeSpan.FromMilliseconds(2), timeSpanParser.Parse("2 millisecond"));
+
+            Assert.AreEqual(TimeSpan.FromMilliseconds(1), timeSpanParser.Parse("1 millis"));
+            Assert.AreEqual(TimeSpan.FromMilliseconds(2), timeSpanParser.Parse("2 milli"));
+
         }
     }
 }
