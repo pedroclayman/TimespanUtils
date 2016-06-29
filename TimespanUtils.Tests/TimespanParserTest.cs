@@ -63,6 +63,49 @@ namespace TimespanUtils.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldFailWhenPassedNullToParse()
+        {
+            var mockOfISingleTermParser = new Mock<ISingleTermParser>();
+
+            
+            var timeSpanParser = new TimeSpanParser(mockOfISingleTermParser.Object);
+            timeSpanParser.Parse(null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldFailWhenPassedNullToContainsTimeSpanInfo()
+        {
+            var mockOfISingleTermParser = new Mock<ISingleTermParser>();
+
+            
+            var timeSpanParser = new TimeSpanParser(mockOfISingleTermParser.Object);
+            timeSpanParser.ContainsTimeSpanInfo(null);
+        }
+
+        [TestMethod]
+        public void ShouldProvideInfoIfStringContainsTimespanInfo()
+        {
+            var mockOfISingleTermParser = new Mock<ISingleTermParser>();
+
+            
+            var timeSpanParser = new TimeSpanParser(mockOfISingleTermParser.Object);
+
+            var result = timeSpanParser.ContainsTimeSpanInfo("this string contains no timespan info");
+            Assert.IsFalse(result);
+
+            result = timeSpanParser.ContainsTimeSpanInfo("we still have 1 week 6 hours 3 minutes 11 seconds 136 millis to go");
+            Assert.IsTrue(result);
+
+            result = timeSpanParser.ContainsTimeSpanInfo("6 hours 3 minutes");
+            Assert.IsTrue(result);
+
+            result = timeSpanParser.ContainsTimeSpanInfo("1 hour");
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void ShouldFailWhenPassedNullToCtor()
         {
             new TimeSpanParser(null);

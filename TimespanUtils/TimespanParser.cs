@@ -9,6 +9,7 @@ namespace TimespanUtils
     public class TimeSpanParser
     {
         private readonly ISingleTermParser _singleTermParser;
+        private readonly Regex _timeSpanExpression = new Regex(@"(\d+ (?:weeks?|days?|hours?|minutes?|seconds?|milliseconds?|millis?))");
 
         internal TimeSpanParser(ISingleTermParser singleTermParser)
         {
@@ -23,8 +24,10 @@ namespace TimespanUtils
 
         public TimeSpan? Parse(string input)
         {
-            var regex = new Regex(@"(\d+ (?:weeks?|days?|hours?|minutes?|seconds?|milliseconds?|millis?))");
-            var matchCollection = regex.Matches(input);
+            if (input == null)
+                throw new ArgumentNullException(nameof(input));
+            
+            var matchCollection = _timeSpanExpression.Matches(input);
             
             if (matchCollection.Count > 0)
             {
@@ -40,6 +43,14 @@ namespace TimespanUtils
             }
 
             return null;
+        }
+
+        public bool ContainsTimeSpanInfo(string input)
+        {
+            if (input == null)
+                throw new ArgumentNullException(nameof(input));
+            
+            return _timeSpanExpression.IsMatch(input);
         }
     }
 }
