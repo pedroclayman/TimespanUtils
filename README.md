@@ -1,4 +1,4 @@
-# TimespanUtils
+# TimespanUtils [![NuGet version](https://badge.fury.io/nu/TimeSpanUtils.svg)](https://badge.fury.io/nu/TimeSpanUtils)
 This project aims to provide some useful utilities when working with TimeSpans. Currently it provides a parser which parses TimeSpan informations from string formed like this: "6 hours", "3 weeks 5 minutes", etc.
 ## Usage
 ```cs
